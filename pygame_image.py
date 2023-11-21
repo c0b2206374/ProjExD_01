@@ -10,6 +10,7 @@ def main():
     kk_img = pg.image.load("ex01-20231121/fig/3.png")
     kk_img = pg.transform.flip(kk_img, True, False)
     kk_list = [kk_img,pg.transform.rotozoom(kk_img, 10, 1.0)]
+    bg_flip = pg.transform.flip(bg_img,True,False)
     
 
     tmr = 0
@@ -17,19 +18,24 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: return
 
-        x = -(tmr%1600)
+        
+        x = tmr%3200
 
-        screen.blit(bg_img, [x, 0])
+        screen.blit(bg_img, [-x, 0])
+        screen.blit(bg_img, [-x+3200, 0])
+        screen.blit(bg_flip, [1600-x, 0])
+        
+        tme = (tmr // 10) % 10
 
-        if tmr % 2 == 0:
+        if tme % 2:
             screen.blit(kk_list[0],[300,200])
         else:
             screen.blit(kk_list[1],[300,200])
             
         
         pg.display.update()
-        tmr += 1        
-        clock.tick(500)
+        tmr += 1
+        clock.tick(100)
 
 
 if __name__ == "__main__":
